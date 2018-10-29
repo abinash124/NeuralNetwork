@@ -1,12 +1,17 @@
 import math
 import sys
 
-def neuralnetworklearning(attributes, number_of_iterations,attribute_names,learning_rate):
+def neuralnetworklearning(dataset, number_of_iterations,attribute_names,learning_rate):
     weight=0
     for x in range(number_of_iterations):
         list_output = []
+        attributes=[]
         counter = 0
         output = 0
+        idx = 0
+        for names in attribute_names:
+            attributes.append(dataset.get_column(attribute_names)[idx])
+
         for attribute in attributes:
             estimate_output = weight*attribute
             error = calculate_error(attributes[counter+1],estimate_output)
@@ -16,16 +21,15 @@ def neuralnetworklearning(attributes, number_of_iterations,attribute_names,learn
             counter = counter + 1
             list_output.append(display_pattern)
 
-        final_output=''.join("Output = " ,sigmoid(output))
+        final_output = ''.join("Output = " ,sigmoid(output))
         list_output.append(final_output)
-
-
+        idx=(idx+1)%number_of_iterations
 
 
 
         print("After iteration {}".format(x+1))
         for contents in list_output:
-            print(contents, ",", end="")
+            print(contents, ",", end = "")
 
 
 
@@ -84,9 +88,12 @@ def main():
     with open(training_file_name) as train_file:
         names_train = train_file.readline().split()
         lines_train = train_file.readlines()
+
+
     with open(test_file_name) as test_file:
         names_test=test_file.readline().split()
         lines_test=test_file.readlines()
+
 
 
 
@@ -109,5 +116,14 @@ def main():
 
 
 
-    training_dataset=DataFrame(dict(zip(names_train,attribute_values_train)))
-    testing_dataset=DataFrame(dict(zip(names_test,attribute_values_test)))
+    training_dataset = DataFrame(dict(zip(names_train,attribute_values_train)))
+    testing_dataset = DataFrame(dict(zip(names_test,attribute_values_test)))
+
+    neuralnetworklearning(training_dataset,number_of_iterations,names_test,learning_rate)
+    neuralnetworklearning(testing_dataset,number_of_iterations,names_train,learning_rate)
+
+
+
+
+
+
