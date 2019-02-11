@@ -6,8 +6,9 @@ in this project.
 Project for Class : CS4375
 
 
-## Python 3.6
-What things you need to install the software and how to install them
+ 
+##What things you need to install the software and how to install them:
+Python 3.6
 
 Link to download python 3:
 https://www.python.org/downloads/
